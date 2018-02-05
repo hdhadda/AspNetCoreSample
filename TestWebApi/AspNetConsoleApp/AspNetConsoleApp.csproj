@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  <TargetFramework>net461</TargetFramework>
+  <OutputType>WinExe</OutputType>
+  <AssemblyName>SmeDesktop</AssemblyName>
+  <AssemblyTitle>Server Management Experience Desktop</AssemblyTitle>
+  <Description>The desktop application for the Server Management Experience.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestWebApi\TestWebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+</Project>

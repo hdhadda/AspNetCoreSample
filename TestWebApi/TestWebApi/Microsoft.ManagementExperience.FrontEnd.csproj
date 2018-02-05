@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+ <PropertyGroup>
+    <OutputType>Library</OutputType>
+  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  <TargetFramework>net461</TargetFramework>
+  <AssemblyTitle>Server Management Experience Gateway</AssemblyTitle>
+  <Description>The gateway for the Server Management Experience.</Description>
+  <ClsCompliant>false</ClsCompliant>
+ </PropertyGroup>
+ <ItemGroup>
+  <EmbeddedResource Include="**\*.ps1" />
+ </ItemGroup>
+ <ItemGroup>
+  <Reference Include="Microsoft.Deployment.WindowsInstaller">
+    <HintPath>$(WixInstallPath)\Microsoft.Deployment.WindowsInstaller.dll</HintPath>
+  </Reference>
+ </ItemGroup>
+ <ItemGroup>
+  <PackageReference Include="ManagedEsent" Version="1.9.4" />
+  <PackageReference Include="Microsoft.AspNetCore" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.2" />
+  <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.0.2" />
+  <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.0.2" />
+  <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
+  <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-alpha2-final" />
+  <PackageReference Include="NuGet.Core" Version="2.14.0" />
+  <PackageReference Include="Security.Cryptography" Version="1.7.2" />
+  <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
+  <PackageReference Include="WiX" Version="3.10.3" />
+ </ItemGroup>
+ <ItemGroup>
+  <Reference Include="System.DirectoryServices.AccountManagement" />
+  <Reference Include="System.Management" />
+  <Reference Include="System.Runtime.Caching" />
+ </ItemGroup>
+ <ItemGroup>
+  <ProjectReference Include="..\Microsoft.ManagementExperience\Microsoft.ManagementExperience.csproj" />
+  <ProjectReference Include="..\Microsoft.ManagementExperience.FeatureInterface\Microsoft.ManagementExperience.FeatureInterface.csproj" />
+  <ProjectReference Include="..\Microsoft.ManagementExperience.Logging\Microsoft.ManagementExperience.Logging.csproj" />
+  <ProjectReference Include="..\Microsoft.ManagementExperience.Telemetry\Microsoft.ManagementExperience.Telemetry.csproj" />
+  <ProjectReference Include="..\Plugin\Microsoft.ManagementExperience.Cim\Microsoft.ManagementExperience.Cim.csproj" />
+  <ProjectReference Include="..\Plugin\Microsoft.ManagementExperience.PowerShell\Microsoft.ManagementExperience.PowerShell.csproj" />
+ </ItemGroup>
+</Project>
