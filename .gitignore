@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/TestWebApi/.vs/TestWebApi/v15
+/TestWebApi/AspNetConsoleApp/obj/Debug/net461
+/TestWebApi/TestConsoleApp/bin/Debug/net461
+/TestWebApi/TestConsoleApp/obj
+/TestWebApi/TestWebApi/bin/Debug/net461
+/TestWebApi/TestWebApi/obj
+/TestWebApi/TestWebApi/TestWebApi.csproj.user
+/TestWebApi/AspNetConsoleApp/bin/Debug/net461
+/TestWebApi/AspNetConsoleApp/obj

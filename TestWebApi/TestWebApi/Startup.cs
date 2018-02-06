@@ -1,5 +1,6 @@
 ﻿namespace TestWebApi
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
     using System;
+    using TestWebApi.Filters;
     using TestWebApi.Interfaces;
     using TestWebApi.Middleware;
     using TestWebApi.Services;
@@ -39,6 +41,7 @@
             // AddScoped: life time: each request.
             // AddSingleton: life time: lifetime of Application.
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Lifetime Samples
             services.AddTransient<IOperationTransient, Operation>();
             services.AddScoped<IOperationScoped, Operation>();
@@ -53,7 +56,11 @@
             services.AddTransient<StaticFileNotFoundRewriter>();
 
             services.AddOptions();
-            services.AddMvc()
+            services.AddMvc(
+                options => 
+                {
+                    options.Filters.Add(new AsyncActionFilter());
+                })
                  .AddJsonOptions(options =>
                  {                     
                      // options.SerializerSettings.Formatting = Formatting.Indented;
@@ -61,6 +68,7 @@
                      options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                      options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                  });
+            services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,7 +135,7 @@
             var fileServerOptions = new FileServerOptions
             {
                 FileProvider = new PhysicalFileProvider(GetUiFolder()),
-                RequestPath = "",
+                RequestPath = string.Empty,
                 EnableDefaultFiles = true
             };
 
