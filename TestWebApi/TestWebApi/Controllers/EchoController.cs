@@ -1,11 +1,9 @@
 ﻿namespace TestWebApi.Controllers
 {
-    using System.Globalization;
-    using System.Security.Claims;
-    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using TestWebApi.Extensions;
-    using TestWebApi.Models;
+    using Microsoft.ManagementExperience.FrontEnd.WebSocketHandlers;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The echo controller.
@@ -27,18 +25,27 @@
         /// The <see cref="string"/>.
         /// </returns>
         [HttpGet("{*message}")]
-#pragma warning disable CA1822 // Mark members as static
-        public string Get(string message)
-#pragma warning restore CA1822 // Mark members as static
+        public async Task Get(string message)
         {
-            var principal = this.User.getUserId();
-
-            if (principal != null)
+            var context = this.HttpContext;
+            if (context.WebSockets.IsWebSocketRequest)
             {
-                return "test failed";
-            }
+                var handler = new WebSocketOperations(context);
+                var webSocketStreamProxy = new WebSocketToStreamProxy();
+                await handler.AcceptAndProcessAsync(webSocketStreamProxy.ProcessWebSocketRequestAsync, webSocketStreamProxy.OnWebSocketClosed);
 
-            return message ?? System.DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                if(!context.Response.HasStarted)
+                {
+                    context.Response.StatusCode = StatusCodes.Status101SwitchingProtocols;
+                }                
+            }
+            else
+            {
+                if (!context.Response.HasStarted)
+                {
+                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                }
+            }
         }
     }
 }

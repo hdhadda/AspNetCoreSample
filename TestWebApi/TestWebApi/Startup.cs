@@ -11,6 +11,9 @@
     using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Serialization;
     using System;
+    using System.Net.WebSockets;
+    using System.Threading;
+    using System.Threading.Tasks;
     using TestWebApi.Filters;
     using TestWebApi.Interfaces;
     using TestWebApi.Middleware;
@@ -108,15 +111,22 @@
                 // ** When Map is used, the matched path segment(s) are removed from HttpRequest.Path and appended to HttpRequest.PathBase for each request
 
             });
-            
+
             // app.UseMiddleware<FailureEmulator>();
-            
+
             //app.Run(async context =>
             //{
             //    await context.Response.WriteAsync("Hello, World!");
             //});
 
             // app.UseMvcWithDefaultRoute();
+
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+                ReceiveBufferSize = 4 * 1024 // // 4KB for a piece of packet.
+            };
+            app.UseWebSockets(webSocketOptions);
 
             app.UseMvc();
         }
