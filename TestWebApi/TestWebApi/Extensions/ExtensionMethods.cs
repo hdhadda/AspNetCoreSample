@@ -15,7 +15,7 @@
                 return null;
 
             ClaimsPrincipal currentUser = user;
-            return currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
     }

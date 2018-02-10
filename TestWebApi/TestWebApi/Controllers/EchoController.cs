@@ -4,6 +4,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.ManagementExperience.FrontEnd.WebSocketHandlers;
     using System.Threading.Tasks;
+    using TestWebApi.Extensions;
+    using TestWebApi.Filters;
+    using TestWebApi.Models;
 
     /// <summary>
     /// The echo controller.
@@ -25,7 +28,9 @@
         /// The <see cref="string"/>.
         /// </returns>
         [HttpGet("{*message}")]
-        public async Task Get(string message)
+        [PrivilegedAccess]
+        // [Authorize(Policy = "BadgeEntry")]
+        public string Get(string message)
         {
             var context = this.HttpContext;
             if (context.WebSockets.IsWebSocketRequest)
