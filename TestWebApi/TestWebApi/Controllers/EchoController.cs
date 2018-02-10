@@ -2,9 +2,11 @@
 {
     using System.Globalization;
     using System.Security.Claims;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using TestWebApi.Extensions;
+    using TestWebApi.Filters;
     using TestWebApi.Models;
 
     /// <summary>
@@ -27,9 +29,9 @@
         /// The <see cref="string"/>.
         /// </returns>
         [HttpGet("{*message}")]
-#pragma warning disable CA1822 // Mark members as static
+        [PrivilegedAccess]
+        // [Authorize(Policy = "BadgeEntry")]
         public string Get(string message)
-#pragma warning restore CA1822 // Mark members as static
         {
             var principal = this.User.getUserId();
 

@@ -68,7 +68,13 @@
                      options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                      options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                  });
-            services.AddAuthorization();
+
+            // Optional.
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("BadgeEntry", policy =>
+                    policy.RequireAssertion((Func<AuthorizationHandlerContext, bool>)CheckPolicy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,6 +125,17 @@
             // app.UseMvcWithDefaultRoute();
 
             app.UseMvc();
+        }
+
+        private bool CheckPolicy(AuthorizationHandlerContext context)
+        {
+            if (context.Resource != null)
+            {
+                return false;
+            }
+
+            return context.User.HasClaim(c =>
+                            (c.Issuer == "https://microsoftsecurity"));
         }
 
         private static string GetUiFolder()
